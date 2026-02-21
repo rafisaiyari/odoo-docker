@@ -4,7 +4,7 @@
     'category': 'Banking',
     'summary': 'Manage bank accounts with deposit and withdraw operations',
     'author': 'Rafi Saiyari',
-    'depends': ['base', 'mail'],
+    'depends': ['base'],
     'data': [
         'security/ir.model.access.csv',
         'data/sequence.xml',

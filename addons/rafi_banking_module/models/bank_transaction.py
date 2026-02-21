@@ -4,29 +4,28 @@ from odoo.exceptions import ValidationError, UserError
 class BankTransaction(models.Model):
     _name = 'banking.transaction'
     _description = 'Bank Transaction'
-    _inherit = ['mail.thread', 'mail.activity.mixin']
     _order = 'transaction_date desc, id desc'
 
     name = fields.Char(string='Reference', required=True, readonly=True, copy=False,
                        default=lambda self: self.env['ir.sequence'].next_by_code('banking.transaction'))
     account_id = fields.Many2one('banking.account', string='Bank Account', required=True, 
-                                  ondelete='restrict', tracking=True)
+                                  ondelete='restrict')
     transaction_type = fields.Selection([
         ('deposit', 'Deposit'),
         ('withdraw', 'Withdrawal'),
         ('transfer', 'Transfer'),
-    ], string='Transaction Type', required=True, tracking=True)
+    ], string='Transaction Type', required=True)
     
-    amount = fields.Float(string='Amount', required=True, tracking=True)
+    amount = fields.Float(string='Amount', required=True)
     transaction_date = fields.Datetime(string='Transaction Date', default=fields.Datetime.now, 
-                                       required=True, tracking=True)
+                                       required=True)
     description = fields.Text(string='Description')
     
     state = fields.Selection([
         ('draft', 'Draft'),
         ('done', 'Done'),
         ('cancelled', 'Cancelled')
-    ], string='State', default='draft', tracking=True)
+    ], string='State', default='draft')
     
     balance_after = fields.Float(string='Balance After', readonly=True)
     

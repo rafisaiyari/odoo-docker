@@ -4,7 +4,6 @@ from odoo.exceptions import ValidationError
 class BankAccount(models.Model):
     _name = 'banking.account'
     _description = 'Bank Account'
-    _inherit = ['mail.thread', 'mail.activity.mixin']
     _rec_name = 'account_number'
 
     account_number = fields.Char(
@@ -14,27 +13,27 @@ class BankAccount(models.Model):
         copy=False,
         default='New'
     )
-    account_holder = fields.Char(string='Account Holder', required=True, tracking=True)
-    balance = fields.Float(string='Balance', compute='_compute_balance', store=True, tracking=True)
+    account_holder = fields.Char(string='Account Holder', required=True)
+    balance = fields.Float(string='Balance', compute='_compute_balance', store=True)
     currency_id = fields.Many2one('res.currency', string='Currency', required=True, 
                                    default=lambda self: self.env.company.currency_id)
     account_type = fields.Selection([
         ('savings', 'Savings'),
         ('checking', 'Checking'),
         ('business', 'Business')
-    ], string='Account Type', required=True, default='savings', tracking=True)
+    ], string='Account Type', required=True, default='savings')
     
     state = fields.Selection([
         ('draft', 'Draft'),
         ('active', 'Active'),
         ('suspended', 'Suspended'),
         ('closed', 'Closed')
-    ], string='State', default='draft', tracking=True)
+    ], string='State', default='draft')
     
     transaction_ids = fields.One2many('banking.transaction', 'account_id', string='Transactions')
     partner_id = fields.Many2one('res.partner', string='Partner')
     
-    opening_date = fields.Date(string='Opening Date', default=fields.Date.today, tracking=True)
+    opening_date = fields.Date(string='Opening Date', default=fields.Date.today)
 
     def _capitalize_account_holder(self):
         for rec in self:
