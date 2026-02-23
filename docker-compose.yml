@@ -55,6 +55,8 @@ services:
       - odoo-web-data:/var/lib/odoo
       - ./addons:/mnt/extra-addons:ro
       - ./config/odoo.conf:/etc/odoo/odoo.conf:ro
+    command: >
+      odoo -c /etc/odoo/odoo.conf --admin-passwd=${ADMIN_PASSWD}
     ports:
       - "8069:8069"
       - "8072:8072"

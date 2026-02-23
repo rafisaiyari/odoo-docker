@@ -23,8 +23,6 @@ status
 odoo/filestore
 # maintenance migration scripts
 odoo/addons/base/maintenance
-# windows installation config file
-config/odoo.conf
 
 # generated for windows installer?
 install/win32/*.bat
